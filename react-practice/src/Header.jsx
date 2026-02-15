@@ -1,5 +1,4 @@
 import React from "react";
-import App,{Card} from './App.jsx'
 
 function Header() {
   return (
@@ -90,7 +89,6 @@ function Header() {
           </div>
         </div>
       </nav>
-      <Card />
     </>
   );
 }
