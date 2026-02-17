@@ -2,10 +2,9 @@ import { useState } from "react";
 import Student from "./Student";
 
 function State() {
-    
   const [show, setshow] = useState(true);
   const [count, setcount] = useState(0);
-  
+
   return (
     <>
       <hr />
