@@ -6,6 +6,6 @@ import Checkbox from "./Checkbox.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Checkbox />
+    <App />
   </StrictMode>,
 );

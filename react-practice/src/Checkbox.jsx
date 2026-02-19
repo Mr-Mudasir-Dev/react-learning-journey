@@ -1,55 +1,48 @@
 import { useState } from "react";
 
 function Checkbox() {
-  const [gender, setgender] = useState([]);
-
-  function chkbox(e) {
-  if (e.target.checked) {
-    setgender([...gender, e.target.value]);
-  } else {
-    setgender(gender.filter((i) => i != e.target.value));
-  }
-}
+  const [gender, setgender] = useState("male");
+  const [opt, setopt] = useState("java");
 
   return (
     <>
       <div>
-        <h1>hello checkbox component</h1>
-        <p>this work</p>
-        <input onChange={chkbox} type="Checkbox" value="PHP" id="php" />
-        <label htmlFor="php">PHP</label>
-        <br />
-        <input onChange={chkbox} type="Checkbox" value="C#" id="c#" />
-        <label htmlFor="c#">C#</label>
-        <br />
-        <input onChange={chkbox} type="Checkbox" value="SQL" id="sql" />
-        <label htmlFor="sql">SQL</label>
-        <br />
-        <input onChange={chkbox} type="Checkbox" value="API" id="api" />
-        <label htmlFor="api">API</label>
-
         <h1>{gender}</h1>
+        <input
+          type="radio"
+          onChange={(e) => setgender(e.target.value)}
+          name="gender"
+          id="male"
+          value="male"
+          checked={gender !== "female"}
+        />
+        <label htmlFor="male">male </label>
+
+        <br />
+
+        <input
+          type="radio"
+          onChange={(e) => setgender(e.target.value)}
+          name="gender"
+          id="femail"
+          value="female"
+          checked={gender !== "male"}
+        />
+        <label htmlFor="femail"> femail</label>
       </div>
 
       <br />
       <br />
       <br />
-      <br />
 
-      {/* <div>
-        <input type="radio" name="gender" id="main" />
-        <label htmlFor="main">mail</label>
-        <br />
-        <input
-          type="radio"
-          onChange={() => setgender()}
-          name="gender"
-          id="femail"
-        />
-        <label htmlFor="femail">femail</label>
-      </div> */}
-
-      <div></div>
+      <div>
+        <select onChange={(e) => setopt(e.target.value)} defaultValue={"java"}>
+          <option value="php">php</option>
+          <option value="java">java</option>
+          <option value="react">react</option>
+        </select>
+      </div>
+      <h1>{opt}</h1>
     </>
   );
 }
