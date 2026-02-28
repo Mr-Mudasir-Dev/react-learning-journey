@@ -1,60 +1,53 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import Practice from "./Practice";
-import { useRef } from "react";
+import { useTransition } from "react";
 import { useFormStatus } from "react-dom";
 
 function App() {
-  const inputforref = useRef();
+  const [ispanding, setTranstion] = useTransition();
 
-  const func = (e) => {
-    e.preventDefault();
-    console.log(inputforref);
-    inputforref.current.focus();
-    inputforref.current.style.color = "red";
+  const handeler = () => {
+    setTranstion(async () => {
+      await new Promise((res) => setTimeout(res, 5000));
+      console.log("submited");
+    });
   };
 
-  async function formfun() {
-    await new Promise((res) => setTimeout(res, 2000));
+  const formstatus = async () => {
+    await new Promise((res) => setTimeout(res, 5000));
     console.log("submited");
-  }
-
-  const Customer = () => {
-    const { pending } = useFormStatus();
-    console.log(pending);
-
-    return (
-      <>
-        <input type="text" />
-        <br />
-        <input type="text" />
-        <br />
-        <input type="text" />
-        <br />
-        <br />
-        <button disabled={pending}>
-          {pending ? "Submitting..." : "Submit"}
-        </button>
-      </>
-    );
   };
+
+  function formhandel() {
+    const { pending } = useFormStatus();
+  }
 
   return (
     <>
-      <h1>This is App Comonent</h1>
+      <h1>This is App Comonent </h1>
+      <hr />
+      <h3>Use Transtion Hook</h3>
+      {ispanding ? (
+        <img
+          src="https://cdn.dribbble.com/userupload/22076800/file/original-8e7ce77dec0edaf0105e8287038f6e60.gif"
+          width="100px"
+          alt=""
+        />
+      ) : null}
+      <button disabled={ispanding} onClick={handeler}>
+        Click
+      </button>
+      <hr />
       <br />
-      <h2>this is other component</h2>
-      <form action="">
-        <Practice btnref={inputforref} fun={func} />
+      <br />
+      <br />
+      <hr />
+      <h3>UseFormStatus Hook</h3><br />
+      <form action={formstatus}>
+        <input type="text" placeholder="name" />
+        <br />
+        <br />
+        <button type="submit">Submit</button>
       </form>
-      <br />
-      <br />
-      <br />
-      <br />
-
-      <form action={formfun}>
-        <Customer />
-      </form>
+      <hr />
     </>
   );
 }
