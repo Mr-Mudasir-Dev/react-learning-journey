@@ -1,33 +1,11 @@
-import { useFormStatus } from "react-dom";
-
-const Practice = () => {
-  const formstatus = async () => {
-    await new Promise((res) => setTimeout(res, 5000));
-    console.log("submited");
-  };
-
+const Practice = ({ count, later }) => {
   return (
     <>
-      <h1>UseFormStatus Hook</h1>
-      <form action={formstatus}>
-        <UserForm />
-      </form>
+  
+      <h3>{count}</h3><br /><br />
+      <h3>{later}</h3>
     </>
   );
 };
 
 export default Practice;
-
-function UserForm() {
-  const { pending } = useFormStatus();
-  console.log(pending);
-
-  return (
-    <>
-      <input type="text" placeholder="name" />
-      <br />
-      <br />
-      <button disabled={pending}>submit</button>
-    </>
-  );
-}
