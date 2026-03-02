@@ -8,8 +8,8 @@ import Object from "./Object.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     {/* <App /> */}
-    {/* <Practice /> */}
+    <Practice />
     {/* <Task /> */}
-    <Object />
+    {/* <Object /> */}
   </StrictMode>,
 );
