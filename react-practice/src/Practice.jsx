@@ -1,79 +1,59 @@
-import { useState } from "react";
+import { useId } from "react";
 
 const Practice = () => {
-  const [input, setinput] = useState("");
-  const [data, setdata] = useState([
-    {
-      id: 1,
-      name: "Ali Khan",
-      age: 20,
-      education: {
-        class: "BS Computer Science",
-        subject: "Data Structures",
-      },
-    },
-    {
-      id: 2,
-      name: "Sara Ahmed",
-      age: 22,
-      education: {
-        class: "BBA",
-        subject: "Marketing",
-      },
-    },
-    {
-      id: 3,
-      name: "Usman Tariq",
-      age: 19,
-      education: {
-        class: "Intermediate",
-        subject: "Pre-Engineering",
-      },
-    },
-    {
-      id: 4,
-      name: "Ayesha Malik",
-      age: 21,
-      education: {
-        class: "BS Mathematics",
-        subject: "Linear Algebra",
-      },
-    },
-    {
-      id: 5,
-      name: "Hamza Noor",
-      age: 23,
-      education: {
-        class: "MBA",
-        subject: "Finance",
-      },
-    },
-  ]);
+  const id = useId();
 
-  const handel = () => {
-    data[data.length - 1].education.subject = input;
-    setdata([...data]);
-    setinput("");
-  };
   return (
     <>
-      <h1>Array of Object Handel</h1>
-      <input
-        type="text"
-        placeholder="Subject change"
-        value={input}
-        onChange={(e) => setinput(e.target.value)}
-      />
-      <button onClick={handel}>change</button>
+      <h1>useId Hook learn</h1>
+
       <br />
       <br />
-      {data.map((item, index) => (
-        <p key={index}>
-          <strong>name:</strong> {item.name},<strong> age: </strong> {item.age},
-          <strong> Class: </strong> {item.education.class},
-          <strong> Subject: </strong> {item.education.subject}
-        </p>
-      ))}
+      <h1>Form number 1</h1>
+      <br />
+
+      <label htmlFor={id + "name"}>Name</label>
+      <input id={id + "name"} type="text" name="" />
+
+      <br />
+
+      <label htmlFor={id + "email"}>Name</label>
+      <input type="text" name="" id={id + "email"} />
+
+      <br />
+
+      <label htmlFor={id + "pass"}>Name</label>
+      <input type="text" name="" id={id + "pass"} />
+
+      <br />
+
+      <label htmlFor={id + "city"}>Name</label>
+      <input type="text" name="" id={id + "city"} />
+
+      <br />
+      <br />
+      <br />
+      <br />
+      <h1>Form number 2</h1>
+      <br />
+
+      <label htmlFor={id + "adminname"}>Name</label>
+      <input id={id + "adminname"} type="text" name="" />
+
+      <br />
+
+      <label htmlFor={id + "adminemail"}>Name</label>
+      <input type="text" name="" id={id + "adminemail"} />
+
+      <br />
+
+      <label htmlFor={id + "adminpass"}>Name</label>
+      <input type="text" name="" id={id + "adminpass"} />
+
+      <br />
+
+      <label htmlFor={id + "admincity"}>Name</label>
+      <input type="text" name="" id={id + "admincity"} />
     </>
   );
 };
