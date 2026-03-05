@@ -1,12 +1,14 @@
 import useToggle from "./Toogle";
 
 const Practice2 = () => {
-  const [togle, settogel] = useToggle();
-  console.log(togle);
-  
+  const [val, setval] = useToggle();
+
   return (
     <>
-      <h1>practice 2 </h1>
+      <button onClick={setval}>toggle heading</button>
+      <button onClick={() => setval(true)}>Show heading</button>
+      <button onClick={() => setval(false)}>Hide heading</button>
+      {val ? <h1>practice 2 </h1> : null}
     </>
   );
 };
