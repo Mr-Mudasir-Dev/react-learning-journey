@@ -7,7 +7,7 @@ function Feedback() {
       <br />
       <ul className="nav nav-tabs">
         <li className="nav-item">
-          <NavLink  className="nav-link" to="question">
+          <NavLink className="nav-link" to="/feedback">
             Question
           </NavLink>
         </li>
@@ -21,6 +21,11 @@ function Feedback() {
         <li className="nav-item">
           <NavLink className="nav-link" to="detailed">
             Detailed
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/">
+            Back To Home
           </NavLink>
         </li>
       </ul>
