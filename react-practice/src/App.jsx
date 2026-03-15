@@ -1,43 +1,19 @@
-import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router";
+import Create from "./Create";
+import Header from "./Header";
+import Show from "./Show";
 
 function App() {
-  const [userdata, setuserdata] = useState([]);
-
-  useEffect(() => {
-    getapi();
-  }, []);
-
-  const getapi = async () => {
-    let url = "http://localhost:5126/api/Student";
-    let respons = await fetch(url);
-    let data = await respons.json();
-    setuserdata(data);
-  };
-
   return (
     <>
-      <h1 className="mb-5">Get Api Call In React.Js</h1>
+      <Routes>
+        <Route element={<Header />}>
+          <Route path="/create" element={<Create />} />
+          <Route path="/" element={<Show />} />
+        </Route>
 
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">City</th>
-            <th scope="col">Age</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userdata.map((user, ind) => (
-            <tr key={ind}>
-              <th scope="row">{user.id}</th>
-              <td>{user.name}</td>
-              <td>{user.city}</td>
-              <td>{user.age}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <Route path="/*" element={<h1>Page 404 Not found</h1>} />
+      </Routes>
     </>
   );
 }
