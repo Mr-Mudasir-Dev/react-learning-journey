@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 const Show = () => {
   const [userdata, setuserdata] = useState([]);
+  const editusernav = useNavigate();
 
   useEffect(() => {
     getapi();
@@ -15,8 +17,6 @@ const Show = () => {
   };
 
   const userdel = async (id) => {
-    console.log(id);
-
     let url = `http://localhost:5126/api/Student/${id}`;
 
     const res = await fetch(url, {
@@ -27,6 +27,10 @@ const Show = () => {
       alert("User was deleted " + user.name);
       setuserdata(userdata.filter((user) => user.id !== id));
     }
+  };
+
+  const useredit = (id) => {
+    editusernav(`/useredit/${id}`);
   };
 
   // Ye bahar component se pehle likho:
@@ -145,6 +149,12 @@ const Show = () => {
                       onClick={() => userdel(user.id)}
                     >
                       Delete
+                    </button>
+                    <button
+                      className="btn btn-warning m-1"
+                      onClick={() => useredit(user.id)}
+                    >
+                      Edit
                     </button>
                   </td>
                 </tr>
