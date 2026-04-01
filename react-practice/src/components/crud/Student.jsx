@@ -25,7 +25,7 @@ const UsersPage = () => {
   }, []);
 
   if (loading) return <Loader />;
-  if (error) return <p style={{ color: "red" }}>❌ {error}</p>;
+   
 
   // Helper — naam ke pehle 2 letters nikalny ke liye avatar ke liye
   const getInitials = (name) =>
@@ -150,7 +150,10 @@ const UsersPage = () => {
                       <td>{user.age}</td>
                       <td>{user.city}</td>
                       <td>
-                        <button className="btn btn-sm btn-outline-primary me-1">
+                        <button
+                          className="btn btn-sm btn-outline-primary me-1"
+                          onClick={() => navgation(`/edit/${user.id}`)}
+                        >
                           Edit
                         </button>
                         <button

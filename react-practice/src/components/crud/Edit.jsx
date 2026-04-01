@@ -1,27 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { editStudent, putStudent } from "../../api/CRUD";
 import { useForm } from "react-hook-form";
-import { createStudent } from "../../api/CRUD";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import Loader from "../common/Loader";
 
-const Create = () => {
-  const [loading, setLoading] = useState(false);
+const Edit = () => {
+  const { id } = useParams();
+  const [loader, setloader] = useState(true);
+  const [loading, setloading] = useState(false);
   const [error, setError] = useState(null);
   const navigation = useNavigate();
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = (data) => {
-    setLoading(true);
-    setError(null);
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        const data = await editStudent(id);
+
+        reset({
+          name: data.name,
+          age: data.age,
+          city: data.city,
+        });
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setloader(false); // ✅ finally mein band karo
+      }
+    };
+    fetchStudent();
+  }, []);
+
+  // ✅ PUT API call add ki!
+  const onSubmit = async (data) => {
     try {
-      createStudent(data);
-      alert("Student added successfully! ✅");
+      setloading(true);
+      setError(null);
+      await putStudent(id, data); // ✅ bas itna!
+      alert("Student updated!");
       navigation("/");
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false);
+      setloading(false);
     }
   };
+
+  if (loader) return <Loader />;
+  if (error) return <p style={{ color: "red" }}>❌ {error}</p>;
 
   return (
     <div className="bg-light min-vh-100 py-4">
@@ -35,10 +61,7 @@ const Create = () => {
             ← Back
           </button>
           <div>
-            <h2 className="fw-bold mb-0">Add New User</h2>
-            <p className="text-muted mb-0" style={{ fontSize: "13px" }}>
-              Fill in the details below to register a new user
-            </p>
+            <h2 className="fw-bold mb-0">Edit Student Profile</h2>
           </div>
         </div>
 
@@ -53,9 +76,9 @@ const Create = () => {
                 className="bg-primary p-4 text-white"
                 style={{ borderRadius: "14px 14px 0 0" }}
               >
-                <h5 className="fw-bold mb-1">User Registration</h5>
+                <h5 className="fw-bold mb-1">My Information</h5>
                 <p className="mb-0" style={{ fontSize: "13px", opacity: 0.8 }}>
-                  Enter user information
+                  Update your details below
                 </p>
               </div>
 
@@ -69,8 +92,9 @@ const Create = () => {
                     ❌ {error}
                   </div>
                 )}
+
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  {/* Name Field */}
+                  {/* Name */}
                   <div className="mb-4">
                     <label
                       className="form-label fw-semibold"
@@ -80,19 +104,18 @@ const Create = () => {
                     </label>
                     <input
                       type="text"
-                      name="name"
-                      {...register("name")}
                       className="form-control"
                       placeholder="e.g. Ali Mudasir"
-                      required
                       style={{ borderRadius: "10px", padding: "10px 14px" }}
+                      {...register("name", { required: "Name zaruri hai!" })}
+                      // ✅ sirf register — defaultValue hata diya!
                     />
                     <div className="form-text" style={{ fontSize: "12px" }}>
                       Enter first and last name
                     </div>
                   </div>
 
-                  {/* Age Field */}
+                  {/* Age */}
                   <div className="mb-4">
                     <label
                       className="form-label fw-semibold"
@@ -102,21 +125,18 @@ const Create = () => {
                     </label>
                     <input
                       type="number"
-                      name="age"
-                      {...register("age")}
                       className="form-control"
                       placeholder="e.g. 22"
-                      min="1"
-                      max="120"
-                      required
                       style={{ borderRadius: "10px", padding: "10px 14px" }}
+                      {...register("age", { required: "Age zaruri hai!" })}
+                      // ✅ sirf register!
                     />
                     <div className="form-text" style={{ fontSize: "12px" }}>
                       Age must be between 1 and 120
                     </div>
                   </div>
 
-                  {/* City Field */}
+                  {/* City */}
                   <div className="mb-4">
                     <label
                       className="form-label fw-semibold"
@@ -125,15 +145,12 @@ const Create = () => {
                       City <span className="text-danger">*</span>
                     </label>
                     <select
-                      name="city"
                       className="form-select"
-                      {...register("city")}
-                      required
                       style={{ borderRadius: "10px", padding: "10px 14px" }}
+                      {...register("city", { required: "City zaruri hai!" })}
+                      // ✅ reset() se automatically select hogi!
                     >
-                      <option value="" disabled>
-                        Select a city
-                      </option>
+                      <option value="">Select a city</option>
                       <option>Karachi</option>
                       <option>Lahore</option>
                       <option>Islamabad</option>
@@ -175,10 +192,7 @@ const Create = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => {
-                        reset();
-                        setError(null);
-                      }} // 7️⃣ reset fix
+                      onClick={() => reset()}
                       className="btn btn-outline-secondary px-4 py-2"
                       style={{ borderRadius: "10px", fontSize: "15px" }}
                     >
@@ -195,4 +209,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default Edit;
