@@ -25,7 +25,7 @@ const UsersPage = () => {
   }, []);
 
   if (loading) return <Loader />;
-   
+  if (error) return <p>{error}</p>;
 
   // Helper — naam ke pehle 2 letters nikalny ke liye avatar ke liye
   const getInitials = (name) =>

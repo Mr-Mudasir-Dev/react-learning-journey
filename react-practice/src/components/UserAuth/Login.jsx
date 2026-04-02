@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { registerUser } from "../../api/userAuth";
+import { loginUser } from "../../api/userAuth";
 import { useNavigate } from "react-router";
 
-function RegisterForm() {
+function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -14,8 +14,9 @@ function RegisterForm() {
     setLoading(true);
 
     try {
-      await registerUser(data);
-      navigate("/auth/login");
+      const res = await loginUser(data);
+      localStorage.setItem("token", res.token);
+      navigate("/");
     } catch (error) {
       setError(error.message);
     } finally {
@@ -36,13 +37,13 @@ function RegisterForm() {
         >
           <div className="d-flex justify-content-between align-items-start">
             <div>
-              <h5 className="fw-semibold mb-1">Create Account</h5>
+              <h5 className="fw-semibold mb-1">Login User</h5>
               <small style={{ opacity: 0.85 }}>
-                Fill in your details to get started
+                login now end get best things for you
               </small>
             </div>
             <span className="badge bg-success-subtle text-success rounded-2">
-              🔒 Secure Form
+              🔒 privaticy importance
             </span>
           </div>
         </div>
@@ -52,19 +53,6 @@ function RegisterForm() {
           {error && <p style={{ color: "red" }}>{error}</p>}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row g-3">
-              {/* First & Last Name */}
-              <div className="col-6">
-                <label className="form-label fw-semibold small">
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Ali"
-                  {...register("name")}
-                />
-              </div>
-
               {/* Email */}
               <div className="col-12">
                 <label className="form-label fw-semibold small">
@@ -97,8 +85,11 @@ function RegisterForm() {
 
               {/* Submit Button */}
               <div className="col-12 mt-4">
-                <button className="btn btn-primary w-100 fw-semibold py-2">
-                  {loading ? "Register..." : "Register"}
+                <button
+                  disabled={loading}
+                  className="btn btn-primary w-100 fw-semibold py-2"
+                >
+                  {loading ? "Login..." : "Login"}
                 </button>
               </div>
 
@@ -106,12 +97,12 @@ function RegisterForm() {
               <div className="col-12 text-center">
                 <hr className="text-muted" />
                 <small className="text-muted">
-                  Already have an account?{" "}
+                  Already have NO account?{" "}
                   <a
-                    href="/auth/login"
+                    href="/auth/register"
                     className="text-primary fw-semibold text-decoration-none"
                   >
-                    Sign In
+                    Register acc
                   </a>
                 </small>
               </div>
@@ -123,4 +114,4 @@ function RegisterForm() {
   );
 }
 
-export default RegisterForm;
+export default Login;

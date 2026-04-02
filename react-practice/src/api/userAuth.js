@@ -19,17 +19,18 @@ export const registerUser = async (data) => {
   }
 };
 
-export const loginUser = async (email, password) => {
+export const loginUser = async (data) => {
   try {
     const res = await apiClint.post("/Auth/login", {
-      email: email,
-      passwordHash: password,
+      email: data.email,
+      passwordHash: data.password,
     });
     return res.data; // ← token aayga
   } catch (error) {
-    if (error.response) {
-      throw new Error("MissMatch");
+    if (error.response.status === 401) {
+      throw new Error("Email ya password galat hai!");
     }
+
     if (error.request) {
       throw new Error("Network Error: Server se connection nahi hua");
     }
